@@ -1,0 +1,3 @@
+[submodule "assets/DOT-secrets"]
+	path = assets/DOT-secrets
+	url = https://github.com/wittenator/DOT-secrets.git
