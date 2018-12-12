@@ -1,12 +1,12 @@
 CREATE TABLE people (
    id INT PRIMARY KEY AUTO_INCREMENT,
-   first_name VARCHAR(100),
-   last_name VARCHAR(100),
+   first_name VARCHAR(100) NOT NULL,
+   last_name VARCHAR(100) NOT NULL,
    department VARCHAR(100),
    sex CHAR(1),
    email VARCHAR(100),
    university VARCHAR(100),
-   status VARCHAR(10)
+   status VARCHAR(10) NOT NULL
 ) WITH SYSTEM VERSIONING;
 
 CREATE TABLE peopleTemp (
@@ -38,7 +38,8 @@ CREATE TABLE events (
    title VARCHAR(100) NOT NULL,
    start_time DATETIME NOT NULL,
    end_time DATETIME NOT NULL,
-   type VARCHAR(100)
+   type VARCHAR(100),
+   CHECK (end_time > start_time)
 );
 
 CREATE TABLE devices (
@@ -47,12 +48,16 @@ CREATE TABLE devices (
 
 CREATE TABLE rfid (
    id INT PRIMARY KEY,
-   people_id INT NOT NULL REFERENCES people(id)
+   people_id INT NOT NULL,
+   FOREIGN KEY (people_id) REFERENCES people(id)
 );
 
 CREATE TABLE attendance (
-   rfid_id INT NOT NULL REFERENCES rfid(id),
+   rfid_id INT NOT NULL,
    event_id INT NOT NULL REFERENCES events(id),
-   device_id VARCHAR(17) NOT NULL REFERENCES devices(mac_address),
-   time DATETIME NOT NULL
+   device_id VARCHAR(17) NOT NULL,
+   time DATETIME NOT NULL,
+   FOREIGN KEY (rfid_id) REFERENCES rfid(id),
+   FOREIGN KEY (event_id) REFERENCES events(id),
+   FOREIGN KEY (device_id) REFERENCES devices(mac_address)
 );
