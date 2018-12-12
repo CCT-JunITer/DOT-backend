@@ -1,4 +1,4 @@
-INSERT INTO attendance (rfid_id, device_id, time, )
+INSERT INTO attendance (rfid_id, device_id, time, event_id)
 VALUES (:rfid_id, :device_id, :time, (SELECT id
-                                      FROM events
-                                      WHERE :time between (events.start_time - INTERVAL 1 HOUR) AND (events.end_time + INTERVAL 1 HOUR))
+                  FROM events
+                  WHERE :time between (events.start_time - INTERVAL 1 HOUR) AND (events.end_time + INTERVAL 1 HOUR) LIMIT 1))

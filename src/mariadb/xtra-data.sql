@@ -12,7 +12,7 @@ VALUES
 INSERT INTO rfid (id, people_id)
 VALUES 
 	(1, 1),
-    (2, 2);
+  (2, 2);
 
 INSERT INTO attendance (rfid_id, event_id, device_id, time)
 VALUES

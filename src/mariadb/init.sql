@@ -54,7 +54,7 @@ CREATE TABLE rfid (
 
 CREATE TABLE attendance (
    rfid_id INT NOT NULL,
-   event_id INT NOT NULL REFERENCES events(id),
+   event_id INT,
    device_id VARCHAR(17) NOT NULL,
    time DATETIME NOT NULL,
    FOREIGN KEY (rfid_id) REFERENCES rfid(id),
