@@ -27,7 +27,7 @@ services:
       DB_PASSWORD: /run/secrets/mariadb_password
       DB_DATABASE: dot
       DB_HOST: mariadb
-      DB_PORT: 3307
+      DB_PORT: 3306
       DB_USER: root
     secrets:
       - mariadb_password

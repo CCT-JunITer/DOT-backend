@@ -15,6 +15,7 @@
     "express": "4.16.3",
     "helmet": "3.13.0",
     "mariadb": "2.0.2-rc",
+    "mysql2": "1.6.4",
     "socket.io": "2.2.0"
   }
 }

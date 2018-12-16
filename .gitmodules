@@ -1,3 +1,6 @@
 [submodule "assets/DOT-secrets"]
 	path = assets/DOT-secrets
 	url = https://github.com/wittenator/DOT-secrets.git
+[submodule "DOT-client"]
+	path = DOT-client
+	url = https://github.com/CCT-JunITer/DOT-client.git
