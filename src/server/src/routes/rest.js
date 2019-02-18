@@ -15,6 +15,7 @@ module.exports = function(db) {
 
 	// Routes
 	router.get('/:endpoint', async (req, res, next) => {
+		res.charset = 'value';
 		res.status(200).send(await db.get(req.params.endpoint))
 	})
 
@@ -23,6 +24,8 @@ module.exports = function(db) {
 	})
 
 	router.post('/attendance', async (req, res, next) => {
+		res.status(200).send(await db.post(req.params.endpoint, req.body))
+		io.emit('UPDATE_EVENT', req.body)
 
 	})
 

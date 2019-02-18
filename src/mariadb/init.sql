@@ -43,7 +43,15 @@ CREATE TABLE events (
 );
 
 CREATE TABLE devices (
-   mac_address VARCHAR(17) PRIMARY KEY
+   mac_address VARCHAR(17) PRIMARY KEY,
+   name VARCHAR(10) NOT NULL
+);
+
+CREATE TABLE eventsDevices (
+   event_id INT NOT NULL ,
+   device_id VARCHAR(17) NOT NULL,
+   FOREIGN KEY (device_id) REFERENCES devices(mac_address),
+   FOREIGN KEY (event_id) REFERENCES events(id)
 );
 
 CREATE TABLE rfid (
@@ -53,6 +61,7 @@ CREATE TABLE rfid (
 );
 
 CREATE TABLE attendance (
+   id INT PRIMARY KEY AUTO_INCREMENT,
    rfid_id INT NOT NULL,
    event_id INT,
    device_id VARCHAR(17) NOT NULL,

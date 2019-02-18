@@ -4,10 +4,10 @@ VALUES
 	('PR Schulung', 'Schulung', '2016-12-15 10:40:00', '2016-12-15 14:50:00'),
 	('DoSi am 19.12', 'DoSi', '2018-12-19 18:30:00', '2018-12-19 22:30:00');
 
-INSERT INTO devices (mac_address)
+INSERT INTO devices (name, mac_address)
 VALUES 
-	('AF:CC:90:AA:32:43'),
-	('62:C6:3F:00:27:FD');
+	('Ultimator','AF:CC:90:AA:32:43'),
+	('Hemmingway', '62:C6:3F:00:27:FD');
 
 INSERT INTO rfid (id, people_id)
 VALUES 
