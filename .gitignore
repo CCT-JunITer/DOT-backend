@@ -61,6 +61,8 @@ typings/
 .next
 
 database/
-assets/ssl/server.key
-assets/ssl/server.crt
+assets/ssl/*
 .idea/
+assets/secrets/*
+!assets/secrets/.placeholder
+__pycache__

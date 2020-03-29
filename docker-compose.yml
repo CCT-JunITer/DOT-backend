@@ -1,20 +1,6 @@
-version: '3.1'
+version: '3.3'
 services:
 
-  mariadb:
-    container_name: MariaDB
-    build:
-      context: .
-      dockerfile: /src/mariadb/Dockerfile
-    volumes:
-      - ./database:/var/lib/mysql
-    ports:
-      - "3307:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mariadb_password
-      MYSQL_DATABASE: dot
-    secrets:
-      - mariadb_password
 
   server:
     container_name: Server
@@ -22,24 +8,16 @@ services:
       context: ./src/server/
       dockerfile: Dockerfile
     ports:
-      - "8080:8080"
+      - "443:443"
     environment:
-      DB_PASSWORD: /run/secrets/mariadb_password
-      DB_DATABASE: dot
-      DB_HOST: mariadb
-      DB_PORT: 3306
-      DB_USER: root
+      API_KEY: /run/secrets/api_key
+      PORT: 443
+    volumes:
+      - ./src/server:/app
     secrets:
-      - mariadb_password
-      - ssl_key
-      - ssl_crt
-
+      - api_key
 
 secrets:
-  mariadb_password:
-    file: ./assets/DOT-secrets/secrets/mariadb_password
-  ssl_crt:
-    file: ./assets/ssl/server.crt
-  ssl_key:
-    file: ./assets/ssl/server.key
+  api_key:
+    file: ./assets/secrets/api_key
 
