@@ -2,6 +2,7 @@ import requests
 from datetime import datetime, time
 from utils import timed_cache
 from fastapi import HTTPException
+from urllib.parse import quote
 
 
 from typing import Union
@@ -12,7 +13,7 @@ def get_user_mapping(key: str = None):
     return {p['uid']: p['name'] for p in requests.get("https://wms.cct-ev.de/dot/user.json?pagesize=10000", headers={"api-key": key}).json()}
 
 # create an event
-def create_event(user: str, key: str = None) -> int:
+def create_event(event_name: str, user: str, key: str = None) -> int:
     payload = {
         "field_agenda": {
             "und": [{
@@ -48,7 +49,7 @@ def create_event(user: str, key: str = None) -> int:
                 }
             ]
         },
-        "title": f"test Donnerstagssitzung am {datetime.now().strftime('%d.%m.%Y')}",
+        "title": event_name,
         "type": "sitzungen"
     }
     r = requests.post("https://wms.cct-ev.de/dot/node.json", headers={"api-key": "1jzGy2t9V6Z1GrhKdV6BYQ"}, json=payload)
@@ -60,7 +61,7 @@ def add_user_to_event(user: str, uri: int, key: str = None):
     users = requests.get(uri, headers={"api-key": key}).json()['field_teilnehmer']['und']
     users = [{"uid":get_user_mapping(key=key)[user['uid']]} for user in users]
     users.append({"uid":user})
-    print(users)
+
     payload = {
         "field_datumsitzung": {
             "und": [
@@ -81,7 +82,8 @@ def add_user_to_event(user: str, uri: int, key: str = None):
         raise HTTPException(status_code=500, detail=r.text)
     return
 
+
 # check if an event was created today TODO: this may break if people create events in the past on Thursdays, needs rework
-def event_exists(key: str = None) -> Union[str, None]:
-    r = requests.get(f"https://wms.cct-ev.de/dot/node.json?parameters[type]=sitzungen&parameters[created]>={datetime.combine(datetime.today(), time.min)}", headers={"api-key": key})
+def event_entry_exists(event_name: str, key: str = None) -> Union[str, None]:
+    r = requests.get(f"https://wms.cct-ev.de/dot/node.json?parameters[type]=sitzungen&parameters[title]={event_name}", headers={"api-key": key})
     return r.json()[0]["uri"] if len(r.json()) > 0 else None
