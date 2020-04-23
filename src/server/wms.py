@@ -52,7 +52,7 @@ def create_event(event_name: str, user: str, key: str = None) -> int:
         "title": event_name,
         "type": "sitzungen"
     }
-    r = requests.post("https://wms.cct-ev.de/dot/node.json", headers={"api-key": "1jzGy2t9V6Z1GrhKdV6BYQ"}, json=payload)
+    r = requests.post("https://wms.cct-ev.de/dot/node.json", headers={"api-key": key}, json=payload)
     if r.status_code != 200:
         raise HTTPException(status_code=500, detail=r.text)
     return r.json()['uri']
